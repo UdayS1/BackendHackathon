@@ -44,8 +44,9 @@ String all_vms="NY-VPC-PRIS02,NY-VPC-PRIS04,NY-VPC-PRIS07,NY-VPC-PRIS08,NY-VPC-P
     }
     public String startVM(String node_name)
     {
+        System.out.println(node_name);
         ProcessBuilder builder = new ProcessBuilder(
-                "cmd.exe", "/C", "cd \"C:\\PSTools\" && PsExec.exe \\\\"+node_name +" -accepteula -u DDS-NA\\qaadmin -p qatest -s -i 2 -d \\\\ny-vpc-sgrid.na.rtdom.net\\GRID_BINARIES\\starttemp.bat");
+                "cmd.exe", "/C", "cd \"C:\\PSTools\" && PsExec.exe \\\\"+node_name+" -accepteula -u DDS-NA\\qaadmin -p qatest -s -i 2 -d \\\\ny-vpc-sgrid.na.rtdom.net\\GRID_BINARIES\\starttemp.bat");
 
         builder.redirectInput(ProcessBuilder.Redirect.INHERIT);
         builder.redirectError(ProcessBuilder.Redirect.INHERIT);
@@ -54,10 +55,12 @@ String all_vms="NY-VPC-PRIS02,NY-VPC-PRIS04,NY-VPC-PRIS07,NY-VPC-PRIS08,NY-VPC-P
         try {
             p = builder.start();
             p.waitFor();
+            return "VM started";
         } catch (Exception e) {
             e.printStackTrace();
+            return "VM not started";
         }
-     return "VM started";
+
     }
     public String stopVM(String node_name){
 
